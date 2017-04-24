@@ -9,7 +9,7 @@ COPY ./conf/local.ini /usr/local/etc/php/conf.d/local.ini
 RUN rm /etc/localtime && ln -s /usr/share/zoneinfo/Europe/Brussels /etc/localtime && "date"
 
 # install some basic tools
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \

@@ -1,5 +1,8 @@
 FROM php:7.1-fpm
 
+LABEL com.example.vendor="pinoniq" \
+      version="1.3"
+
 MAINTAINER Jeroen "pinoniq" Meeus
 
 # Copy our ini file

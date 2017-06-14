@@ -21,10 +21,13 @@ RUN apt-get update && apt-get install -y \
         mysql-client \
         unzip \
         git \
+        libgmp-dev \
     && docker-php-ext-install -j$(nproc) iconv mcrypt \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install pdo pdo_mysql
+    && docker-php-ext-install pdo pdo_mysql \
+    && docker-php-ext-install gmp
+
 
 # Install xdebug
 RUN pecl install xdebug \
@@ -53,5 +56,14 @@ RUN curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony \
 # add some useful symfony shortcuts
 RUN echo 'alias dev="php bin/console --env=dev"' >> ~/.bashrc \
 && echo 'alias prod="php bin/console --env=prod"' >> ~/.bashrc
+
+# add node and npm
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get install -y nodejs
+
+# add some additional exposed ports to listen to, like xdebug, webpack-dev-server, ...
+EXPOSE 8080
+EXPOSE 9000
+EXPOSE 9001
 
 WORKDIR /var/www
